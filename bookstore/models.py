@@ -7,11 +7,11 @@ class Category(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
 
 
-class Meta:
-    verbose_name_plural = 'categories'
+    class Meta:
+        verbose_name_plural = 'categories'
 
-def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
 
 
 class Books(models.Model):
