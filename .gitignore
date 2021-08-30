@@ -1,2 +1,10 @@
 shop/settings.py
 db.sqlite3
+shop/settings.py
+media/images/komo-srdjan_valjarevic_v_TgT4P0A.jpg
+media/images/filijala_vv.jpg
+media/images/book.jpg
+bookstore/media/images/komo-srdjan_valjarevic_v.jpg
+bookstore/media/images/komo-srdjan_valjarevic_v_TgT4P0A.jpg
+bookstore/media/images/filijala_vv.jpg
+bookstore/media/images/book.jpg
