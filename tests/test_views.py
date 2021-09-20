@@ -51,15 +51,17 @@ class TestViewResponses(TestCase):
         request = HttpRequest() # we need to import HttpRequests
         response = all_books(request)  # we are sending the Http request to the actual view we wrote ( need to import our views)
         html = response.content.decode('utf8') # getting all the HTML from the page, that we can check against
-        self.assertIn('<title>Home</title>', html) # -- assertIn checks if something is inside
+        self.assertIn('<title>nBooks</title>', html) # -- assertIn checks if something is inside
         self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
         self.assertEqual(response.status_code, 200)
     
 
     def test_view_function(self):
-        request = self.factory.get('/item/komo')
+        request = self.factory.get('/komo')
         response = all_books(request)
         html = response.content.decode('utf8')
-        self.assertIn('<title>Home</title>', html)
+        self.assertIn('<title>nBooks</title>', html)
         self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
         self.assertEqual(response.status_code, 200)
+
+    

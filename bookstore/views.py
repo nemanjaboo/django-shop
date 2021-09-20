@@ -5,19 +5,9 @@ from .models import Books, Category
 # if we are not using default templates folder app/templates/app we need to add our custom templates folder in settings.py,
 # TEMPLATES, DIRS
 
-def categories(request):
-    """
-    Returns all category information that will be available throught the site
-    """
-    # we accomplish having this available throughout the whole site by adding
-    # this view to the context_processors
-    return {
-        'categories': Category.objects.all()
-    }
-
 
 def all_books(request):
-    books = Books.objects.all()
+    books = Books.booksm.all()  # books.products - new model manager in models.py
     return render(request, 'bookstore/home.html', {'books':books})
 
 def book_detail(request, slug):

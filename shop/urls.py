@@ -22,7 +22,9 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('bookstore.urls', namespace='bookstore')), #homepage, include is connecting to another url.py file, namespace
-    #allows us to access our urls in convinient way
+     #allows us to access our urls in convinient way
+    path('basket/', include('shop_basket.urls', namespace='basket')),
+ 
 ]
 
 
