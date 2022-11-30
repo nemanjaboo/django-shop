@@ -10,11 +10,21 @@ def index(request):
 # Create your views here.
 
 class GameDetailView(DetailView):
-
     model = Game
     template_name: 'game_detail'
 
-
 class GameListView(ListView):
     model = Game
-    template_name: 'game_list'
+    template_name = 'game_list'
+    paginate_by =  5
+    ordering = ['name']
+  
+
+    def post(self, request, *args, **kwargs):
+        mylist = request.POST.getlist('sorting')
+        self.ordering = request.POST.getlist('sorting')
+        return super(GameListView, self).get(request, *args, **kwargs)
+
+
+
+

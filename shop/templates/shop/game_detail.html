@@ -1,9 +1,11 @@
-
+{% extends "base.html" %}
+{% block game%}
 <h1>Title: {{game.name}}</h1>
 <h2>Price:</h2>
 <p>{{ game.price }} RSD</p>
+<img style="width:150px" src="{{ game.image.url }}" />
 <h2>Categories:</h2>
-{% for catname in game.category.all %}
-{{catname}}
-
+{% for catname in game.category.all %} 
+<span> {{catname}}</span>
 {% endfor %}
+{% endblock %}
