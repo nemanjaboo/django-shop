@@ -1,3 +1,8 @@
-{% for game in object_list %}
-{{ game }}
-{% endfor %}
+<h2>List of our games!</h2>
+
+<ul>
+  {% for game in object_list %}
+
+  <li><a href="/shop/{{game.id}}">{{ game }}</li>
+  {% endfor %}
+</ul>
