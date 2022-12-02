@@ -13,10 +13,8 @@ class Category(models.Model):
 class Game(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
-    price = models.DecimalField(decimal_places=2, max_digits=7)
-    category = models.ManyToManyField(Category)
+    price = models.IntegerField()
     status = models.BooleanField(default=0)
-    players = models.IntegerField(default=0)
     image = models.ImageField(upload_to='gameimages/', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
