@@ -15,7 +15,8 @@ class Game(models.Model):
     slug = models.SlugField(max_length=100)
     price = models.IntegerField()
     status = models.BooleanField(default=0)
-    image = models.ImageField(upload_to='gameimages/', null=True)
+    # image = models.ImageField(upload_to='gameimages/', null=True)
+    image = models.URLField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -25,3 +26,4 @@ class Game(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Game, self).save(*args, **kwargs)
+

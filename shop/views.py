@@ -21,7 +21,7 @@ class GameListView(ListView):
   
 
     def post(self, request, *args, **kwargs):
-        mylist = request.POST.getlist('sorting')
+        # mylist = request.POST.getlist('sorting')
         self.ordering = request.POST.getlist('sorting')
         return super(GameListView, self).get(request, *args, **kwargs)
 

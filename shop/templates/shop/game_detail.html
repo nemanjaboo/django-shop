@@ -3,9 +3,14 @@
 <h1>Title: {{game.name}}</h1>
 <h2>Price:</h2>
 <p>{{ game.price }} RSD</p>
-<img style="width:150px" src="{{ game.image.url }}" />
-<h2>Categories:</h2>
+<img style="width:150px" src="{{ game.image }}" />
+{% if game.status %}
+<p style="color:rgb(93, 204, 83);font-weight:bold">Na stanju</p>
+{% else %}
+<p style="color:rgb(204, 83, 83);font-weight:bold">Nije na stanju</p>
+{% endif %}
+<!-- <h2>Categories:</h2>
 {% for catname in game.category.all %} 
-<span> {{catname}}</span>
+<span> {{catname}}</span> -->
 {% endfor %}
 {% endblock %}
