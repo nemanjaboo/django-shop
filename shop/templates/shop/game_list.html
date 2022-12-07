@@ -6,12 +6,12 @@
 
   <li style="width:200px;display:grid;margin-bottom:5px">
     <img style="width: 90px; height:90px" src="{{game.image}}">
-    <a href="/shop/{{game.id}}">{{ game }}</a>
+    <a href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
     </li>
     
   {% endfor %}
 </ul>
-<form action="{% url 'games-list' %}" method="post">
+<form action="{% url 'shop:games-list' %}" method="post">
 {% csrf_token %}
 <input type='checkbox' name='sorting' value="price"></input>
 <label class="form-check-label" for="price">By price</label>

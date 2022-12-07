@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 from datetime import date
+from django.urls import reverse
 
-# Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -27,3 +27,5 @@ class Game(models.Model):
         self.slug = slugify(self.name)
         super(Game, self).save(*args, **kwargs)
 
+    def get_absoulte_url(self):
+        return reverse("shop:game-detail", kwargs={"slug": self.slug})
