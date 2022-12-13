@@ -1,25 +1,55 @@
 {% extends "base.html" %}
 <h2>List of our games!</h2>
 {% block list %}
-<ul>
+  <div class="row">
+ 
   {% for game in object_list %}
 
-  <li style="width:200px;display:grid;margin-bottom:5px">
+  <!-- <div class="col s1">
     <img style="width: 90px; height:90px" src="{{game.image}}">
     <a href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
-    </li>
-    
+  </div>     -->
+  <div class="col s4">
+  <div class="row">
+    <div class="col s12 m7">
+      <div class="card pulse small">
+        <div class="card-image">
+          <img src="{{game.image}}">
+        </div>
+        <div class="card-action">
+          <a class="blue-text text-darken-2 card-link" href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   {% endfor %}
-</ul>
+
+</div>
+
 <form action="{% url 'shop:games-list' %}" method="post">
 {% csrf_token %}
-<input type='checkbox' name='sorting' value="price"></input>
-<label class="form-check-label" for="price">By price</label>
-<input type='checkbox' name='sorting' value="name"></input>
-<label class="form-check-label" for="price">By name</label>
-<input type='checkbox' name='sorting' value="created_at"></input>
-<label class="form-check-label" for="price">By date</label>
-<button type="submit">Submit</button>
+<div>
+<label class="form-check-label" for="price">
+  <input type='checkbox' name='sorting' value="price" id="price"></input>
+  <span>By Price</span>
+</label>
+</div>
+<div>
+<label class="form-check-label" for="name">
+  <input type='checkbox' name='sorting' value="name" id="name"></input>
+  <span>By Name</span>
+</label>
+</div>
+<div>
+<label class="form-check-label" for="date">
+  <input type='checkbox' name='sorting' value="created_at"  id="date"></input>
+  <span>By Date</span>
+</label>
+</div>
+
+<button type="submit"  class="btn waves-effect waves-light">Submit</button>
 </form>
 
 {% if is_paginated %}
@@ -31,8 +61,8 @@
     {% endif %}
     {% for i in paginator.page_range %}
       {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
+        <li style="color:red" class="active"><span><span class="sr-only">({{i}})</span></span></li>
+      {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
         <li><a href="?page={{ i }}">{{ i }}</a></li>
       {% endif %}
     {% endfor %}

@@ -1,11 +1,28 @@
+{% load static %}
 <html lang="en">
 <head>
+    
+
+    <link rel="stylesheet" href="{% static 'shop/custom.css' %}">
     <!-- <link rel="stylesheet" href="style.css"> -->
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <!-- Fontovi -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     {%block title%} {% endblock %}
 </head>
 
 <body>
-    <h1> Board Games Shop</h1>
+    <div class="container">
+    <h3 class="naslov"> Board Games Shop</h3>
     {% block game %}{% endblock %}
     {% block list %}{% endblock %}
+    </div>
 </body>
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        
