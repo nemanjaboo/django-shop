@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -13,13 +15,16 @@ from .models import Game
 def index(request):
     return HttpResponse("Hello, world. You are at the shop")
 
+def logout_view(request):
+    logout(request)
+    return redirect('shop:login')
 # Create your views here.
 
 class GameDetailView(DetailView):
     model = Game
     template_name: 'game_detail'
 
-
+@method_decorator(login_required, name='dispatch')
 class GameListView(ListView):
     model = Game
     template_name = 'game_list'
@@ -31,6 +36,7 @@ class GameListView(ListView):
         # mylist = request.POST.getlist('sorting')
         self.ordering = request.POST.getlist('sorting')
         return super(GameListView, self).get(request, *args, **kwargs)
+    
 
 class SignUpView(CreateView):
     form_class = SignUpForm

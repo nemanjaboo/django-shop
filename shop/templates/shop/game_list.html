@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 <h2>List of our games!</h2>
 {% block list %}
+{% if user.is_authenticated %}
+<span class="inter">Welcome </span><span class="inter">{{user}}.</span>
+<p><a href="{% url 'shop:logout' %}">Log Out</a></p>
+{% endif %}
+{% for game in object_list %}
+
   <div class="row">
- 
-  {% for game in object_list %}
+
 
   <!-- <div class="col s1">
     <img style="width: 90px; height:90px" src="{{game.image}}">

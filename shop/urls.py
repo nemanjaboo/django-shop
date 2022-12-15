@@ -6,9 +6,9 @@ app_name = 'shop'
 urlpatterns = [
     # path('', views.index, name='index'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
-    path('login/', views.LoginPageView.as_view(), name='login'),
+    path('', views.LoginPageView.as_view(), name='login'),
+    path('games/', views.GameListView.as_view(), name='games-list'),
     path('<slug:slug>', views.GameDetailView.as_view(), name='game-detail'),
-    path('', views.GameListView.as_view(), name='games-list'),
-    
+    path('logout/', views.logout_view, name='logout'),
 ] 
 
