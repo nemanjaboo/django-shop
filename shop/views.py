@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import View
 from .forms import SignUpForm, LoginForm
-from .models import Game
+from .models import Game, Profile, Favorite
 
 def index(request):
     return HttpResponse("Hello, world. You are at the shop")
@@ -24,7 +24,12 @@ class GameDetailView(DetailView):
     model = Game
     template_name: 'game_detail'
 
-@method_decorator(login_required, name='dispatch')
+    def like_a_game(request, pk):
+        game = get_object_or_404(Game, pk=pk)
+        favorite = Favorite.objects.get_or_create(user=request.user, game=game)
+        favorite.save()
+    
+
 class GameListView(ListView):
     model = Game
     template_name = 'game_list'
@@ -53,7 +58,6 @@ class LoginPageView(View):
         message = ''
         return render(request, self.template_name, context={'form':form, 'message': message})
     
-
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -66,3 +70,23 @@ class LoginPageView(View):
                 return redirect('shop:games-list')
         message = 'Login failed!'
         return render(request, self.template_name, context={'form': form, 'message': message})
+
+class ProfileView(DetailView):
+    model = Profile
+    template_name = 'shop/profile_detail.html'
+
+
+def LikeView(request, pk):
+    game = get_object_or_404(Game, id=request.POST.get('game_id'))
+    user = User.objects.get(id=request.user.id)
+    print(game)
+    print(user)
+    favorite = Favorite.objects.create()
+    favorite.save()
+    favorite.user.add(user)
+    favorite.game.add(game)
+    favorite.save()
+    print(favorite)
+    print(favorite.game)
+    print(favorite.user)
+    return redirect('shop:games-list')

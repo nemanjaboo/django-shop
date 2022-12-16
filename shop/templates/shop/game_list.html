@@ -4,11 +4,13 @@
 {% if user.is_authenticated %}
 <span class="inter">Welcome </span><span class="inter">{{user}}.</span>
 <p><a href="{% url 'shop:logout' %}">Log Out</a></p>
+{% else %}
+<p>Please login</p>
+<p><a href="{% url 'shop:login' %}">Log in</a></p>
 {% endif %}
 {% for game in object_list %}
 
   <div class="row">
-
 
   <!-- <div class="col s1">
     <img style="width: 90px; height:90px" src="{{game.image}}">

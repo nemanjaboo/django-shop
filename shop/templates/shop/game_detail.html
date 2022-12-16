@@ -4,13 +4,21 @@
 <h2>Price:</h2>
 <p>{{ game.price }} RSD</p>
 <img style="width:150px" src="{{ game.image }}" />
+<form action="{% url 'shop:liked' game.pk %}" method="POST">
+    {% csrf_token%}
+
+<button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">favorite</i></button>
+</form>
 {% if game.status %}
 <p style="color:rgb(93, 204, 83);font-weight:bold">Na stanju</p>
 {% else %}
 <p style="color:rgb(204, 83, 83);font-weight:bold">Nije na stanju</p>
+
 {% endif %}
 <!-- <h2>Categories:</h2>
 {% for catname in game.category.all %} 
 <span> {{catname}}</span> -->
 {% endfor %}
 {% endblock %}
+
+
