@@ -18,8 +18,17 @@
 </head>
 
 <body>
+    
+
     <div class="container">
-    <h5 class="naslov"> Board Games Shop</h5>
+        <nav>
+            <div class="nav-wrapper">
+              <a  class="brand-logo inter" href="{% url 'shop:games-list' %}">Board Game Shop</a>
+
+              <a class="right hide-on-med-and-down inter" href="{% url 'shop:profile-detail' slug=user %}">Your Profile</a>
+
+            </div>
+          </nav>
     {% block login %}{% endblock %}
     {% block signup %}{% endblock %}
     {% block profile %}{% endblock %}

@@ -56,8 +56,9 @@ class Profile(models.Model):
         super(Profile, self).save(*args, **kwargs)
 
 class Favorite(models.Model):
-    user = models.ManyToManyField(User)
+    profile = models.ManyToManyField(Profile)
     game = models.ManyToManyField(Game)
     time = models.DateTimeField(auto_now_add=True)
 
-    
+    #Pivot tabela
+    # Pogledaj foreign key i through 

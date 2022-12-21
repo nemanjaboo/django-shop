@@ -18,7 +18,16 @@ def index(request):
 def logout_view(request):
     logout(request)
     return redirect('shop:login')
-# Create your views here.
+
+def LikeView(request, pk):
+    game = get_object_or_404(Game, id=request.POST.get('game_id'))
+    profile = Profile.objects.get(user=request.user.id)
+    favorite = Favorite.objects.create()
+    favorite.profile.add(profile)
+    favorite.game.add(game)
+    profile.favorites.add(game)
+    favorite.save()
+    return redirect('shop:games-list')
 
 class GameDetailView(DetailView):
     model = Game
@@ -75,18 +84,8 @@ class ProfileView(DetailView):
     model = Profile
     template_name = 'shop/profile_detail.html'
 
-
-def LikeView(request, pk):
-    game = get_object_or_404(Game, id=request.POST.get('game_id'))
-    user = User.objects.get(id=request.user.id)
-    print(game)
-    print(user)
-    favorite = Favorite.objects.create()
-    favorite.save()
-    favorite.user.add(user)
-    favorite.game.add(game)
-    favorite.save()
-    print(favorite)
-    print(favorite.game)
-    print(favorite.user)
-    return redirect('shop:games-list')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = Profile.objects.get(user=self.request.user.id)
+        context['fav_games'] = profile.favorites.all()
+        return context

@@ -7,7 +7,7 @@
 <form action="{% url 'shop:liked' game.pk %}" method="POST">
     {% csrf_token%}
 
-<button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">favorite</i></button>
+<button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">favorite</i>Add to Favorites</button>
 </form>
 {% if game.status %}
 <p style="color:rgb(93, 204, 83);font-weight:bold">Na stanju</p>
