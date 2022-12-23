@@ -22,23 +22,35 @@ def logout_view(request):
 def LikeView(request, pk):
     game = get_object_or_404(Game, id=request.POST.get('game_id'))
     profile = Profile.objects.get(user=request.user.id)
-    favorite = Favorite.objects.create()
-    favorite.profile.add(profile)
-    favorite.game.add(game)
-    profile.favorites.add(game)
-    favorite.save()
-    return redirect('shop:games-list')
+    if game not in profile.favorites.all():
+        favorite = Favorite.objects.create()
+        favorite.profile.add(profile)
+        favorite.game.add(game)
+        profile.favorites.add(game)
+        favorite.save()
+        return redirect('shop:games-list')
+    else:
+        fav = Favorite.objects.get(profile=profile, game=game)
+        profile.favorites.remove(game)
+        fav.delete()
+        return redirect('shop:games-list')
+
 
 class GameDetailView(DetailView):
     model = Game
     template_name: 'game_detail'
 
-    def like_a_game(request, pk):
-        game = get_object_or_404(Game, pk=pk)
-        favorite = Favorite.objects.get_or_create(user=request.user, game=game)
-        favorite.save()
-    
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        game_name = context['game']
+        game = get_object_or_404(Game, name=game_name)
+        profile = Profile.objects.get(user=self.request.user.id)
+        if game in profile.favorites.all():
+            context.update({
+                'game_faved': True
+            })
+        return context
+       
 class GameListView(ListView):
     model = Game
     template_name = 'game_list'

@@ -33,6 +33,7 @@ class Game(models.Model):
 
     def get_absoulte_url(self):
         return reverse("shop:game-detail", kwargs={"slug": self.slug})
+        
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
