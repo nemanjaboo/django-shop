@@ -8,6 +8,7 @@ urlpatterns = [
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path('', views.LoginPageView.as_view(), name='login'),
     path('games/', views.GameListView.as_view(), name='games-list'),
+    path('search/', views.SearchView.as_view(), name='search-list'),
     path('<slug:slug>', views.GameDetailView.as_view(), name='game-detail'),
     path('logout/', views.logout_view, name='logout'),
     path('profile/<slug:slug>', views.ProfileView.as_view(), name='profile-detail'),

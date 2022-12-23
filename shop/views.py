@@ -101,3 +101,12 @@ class ProfileView(DetailView):
         profile = Profile.objects.get(user=self.request.user.id)
         context['fav_games'] = profile.favorites.all()
         return context
+
+class SearchView(ListView):
+    model = Game
+    context_object_name = 'games'
+    template_name ='shop/search_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Game.objects.filter(name__contains=query.upper())
