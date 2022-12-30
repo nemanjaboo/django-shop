@@ -1,103 +1,110 @@
 {% extends "base.html" %}
 {% block list %}
-{% if user.is_authenticated %}
-<span class="inter">Welcome </span><span class="inter">{{user}}.</span>
-<p><a href="{% url 'shop:logout' %}">Log Out</a></p>
-{% else %}
-<p>Please login</p>
-<p><a href="{% url 'shop:login' %}">Log in</a></p>
-{% endif %}
-<form name='game_search' action="{% url 'shop:search-list' %}" class="search-form pt-3" method=GET >
-  <div class="form-group has-feedback">
-      <input type="search" class="form-control" name="q" id="search" placeholder="Find your game" value="{{ request.GET.q }}">
-      <span class="glyphicon glyphicon-search form-control-feedback"></span>
+<div class="px-4 py-3">
+  {% if user.is_authenticated %}
+  <span class="inter">Welcome </span><span class="inter">{{user}}.</span>
+  <p><a href="{% url 'shop:logout' %}">Log Out</a></p>
+  {% else %}
+  <p>Please login</p>
+  <p><a href="{% url 'shop:login' %}">Log in</a></p>
+  {% endif %}
+  <form name='game_search' action="{% url 'shop:search-list' %}" class="search-form pt-3" method=GET >
+    <div class="form-group has-feedback">
+        <input type="search" class="form-control" name="q" id="search" placeholder="Find your game" value="{{ request.GET.q }}">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+    </div>
+  <div class="form-check pt-2 d-flex justify-content-between">
+    <!-- <div>
+    <input class="form-check-input" type="checkbox" value="yes" id="flexCheckDefault" name="instock">
+    <label class="form-check-label" for="flexCheckDefault">
+    Only show games in stock
+    </label>
+    </div>   -->
+    <div>
+    <button type="submit" class="bg-transparent hover:bg-zinc-500 text-zinc-700 font-semibold hover:text-white py-2 px-4 border border-zinc-500 hover:border-transparent rounded">Search</button>
+    </div>
   </div>
-<div class="form-check pt-2 d-flex justify-content-between">
-  <!-- <div>
-  <input class="form-check-input" type="checkbox" value="yes" id="flexCheckDefault" name="instock">
-  <label class="form-check-label" for="flexCheckDefault">
-  Only show games in stock
-  </label>
-  </div>   -->
-  <div>
-  <button type="submit" class="btn btn-primary">Search</button>
-  </div>
-</div>
 
-</form>
-{% for game in object_list %}
+  </form>
+  <div class="grid grid-cols-6 gap-4">
+  {% for game in object_list %}
 
-  <div class="row">
-
-  <!-- <div class="col s1">
-    <img style="width: 90px; height:90px" src="{{game.image}}">
-    <a href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
-  </div>     -->
-  <div class="col s4">
-  <div class="row">
-    <div class="col s12 m7">
-      <div class="card pulse small">
-        <div class="card-image">
-          <img src="{{game.image}}">
-        </div>
-        <div class="card-action">
-          <a class="blue-text text-darken-2 card-link" href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
-          <br>
-          <span class="teal-text text-darken-1">{{game.price}} RSD</span>
-          <br>
+  
+    <!-- <div class="col s4">
+    <div class="row">
+      <div class="col s12 m7">
+        <div class="card pulse small">
+          <div class="card-image">
+            <img src="{{game.image}}">
+          </div>
+          <div class="card-action">
+            <a class="blue-text text-darken-2 card-link" href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
+            <br>
+            <span class="teal-text text-darken-1">{{game.price}} RSD</span>
+            <br>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div> -->
+    <div class="max-w-sm rounded overflow-hidden shadow-lg border-solid border-1 border-zinc-200">
+      <img class="w-full" src="{{game.image}}" alt="Sunset in the mountains">
+      <div class="px-6 py-4">
+        <a class="text-darken-2 card-link" href="{{ game.get_absoulte_url }}">{{ game.name }}</a>
+        <p class="text-cyan-700 text-base font-semibold">
+          {{ game.price }}
+        </p>
+      </div>
+    </div>
 
-  {% endfor %}
-
-</div>
-
-<form action="{% url 'shop:games-list' %}" method="post">
-{% csrf_token %}
-<div>
-<label class="form-check-label" for="price">
-  <input type='checkbox' name='sorting' value="price" id="price"></input>
-  <span>By Price</span>
-</label>
-</div>
-<div>
-<label class="form-check-label" for="name">
-  <input type='checkbox' name='sorting' value="name" id="name"></input>
-  <span>By Name</span>
-</label>
-</div>
-<div>
-<label class="form-check-label" for="date">
-  <input type='checkbox' name='sorting' value="created_at"  id="date"></input>
-  <span>By Date</span>
-</label>
-</div>
-
-<button type="submit"  class="btn waves-effect waves-light">Submit</button>
-</form>
-
-{% if is_paginated %}
-  <ul class="pagination" style="list-style:none;display:flex;flex-direction:row;gap:7px;padding:0px">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li style="color:red" class="active"><span><span class="sr-only">({{i}})</span></span></li>
-      {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
     {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
+
+  </div>
+
+  <form action="{% url 'shop:games-list' %}" method="post">
+  {% csrf_token %}
+  <div>
+  <label class="form-check-label" for="price">
+    <input type='checkbox' name='sorting' value="price" id="price"></input>
+    <span>By Price</span>
+  </label>
+  </div>
+  <div>
+  <label class="form-check-label" for="name">
+    <input type='checkbox' name='sorting' value="name" id="name"></input>
+    <span>By Name</span>
+  </label>
+  </div>
+  <div>
+  <label class="form-check-label" for="date">
+    <input type='checkbox' name='sorting' value="created_at"  id="date"></input>
+    <span>By Date</span>
+  </label>
+  </div>
+
+  <button type="submit"  class="bg-transparent hover:bg-zinc-500 text-zinc-700 font-semibold hover:text-white py-2 px-4 border border-zinc-500 hover:border-transparent rounded">Submit</button>
+  </form>
+
+  {% if is_paginated %}
+    <ul class="pagination" style="list-style:none;display:flex;flex-direction:row;gap:7px;padding:0px">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li style="color:red" class="active"><span><span class="sr-only">({{i}})</span></span></li>
+        {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+</div>
 {% endblock %}

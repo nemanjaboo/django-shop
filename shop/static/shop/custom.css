@@ -15,3 +15,11 @@
 .brand-logo {
     color:teal;
 }
+
+input[type=text] {
+    border: 1px solid black !important;
+}
+
+input[type=password] {
+    border: 1px solid black !important;
+}

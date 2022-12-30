@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 {% block game%}
-<h4 class="blue-text text-darken-2 card-link">{{game.name}}</h4>
-<h5 class="teal-text text-darken-1">{{ game.price }} RSD</h5>
-<img style="width:150px" src="{{ game.image }}" />
-{% if game_faved %}
-<form action="{% url 'shop:liked' game.pk %}" method="POST">
-    {% csrf_token%}
+<div class="flex justify-center">
+    <div class="flex flex-col py-5">
+        <h4 class="blue-text text-darken-2 card-link">{{game.name}}</h4>
+        <h5 class="teal-text text-darken-1">{{ game.price }} RSD</h5>
+        <img style="width:150px" src="{{ game.image }}" />
+        {% if game_faved %}
+        <form action="{% url 'shop:liked' game.pk %}" method="POST">
+            {% csrf_token%}
 
-<button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">remove_circle</i>REMOVE</button>
-</form>
-{% else %}
-<form action="{% url 'shop:liked' game.pk %}" method="POST">
-    {% csrf_token%}
+        <button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">remove_circle</i>REMOVE</button>
+        </form>
+        {% else %}
+        <form action="{% url 'shop:liked' game.pk %}" method="POST">
+            {% csrf_token%}
 
-<button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">favorite</i>ADD</button>
-</form>
-{% endif %}
+        <button type="submit", name="game_id", value="{{ game.id }}"><i class="material-icons red-text text-darken-2">favorite</i>ADD</button>
+        </form>
+        {% endif %}
 
-{% if game.status %}
-<p style="color:rgb(93, 204, 83);font-weight:bold">Na stanju</p>
-{% else %}
-<p style="color:rgb(204, 83, 83);font-weight:bold">Nije na stanju</p>
+        {% if game.status %}
+        <p style="color:rgb(93, 204, 83);font-weight:bold">Na stanju</p>
+        {% else %}
+        <p style="color:rgb(204, 83, 83);font-weight:bold">Nije na stanju</p>
 
-{% endif %}
-
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 
 
